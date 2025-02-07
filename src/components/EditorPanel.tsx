@@ -1,14 +1,15 @@
 "use client";
 
-import {pistonApi} from "@/apis/pistonApi";
+import {pistonApi, useGetOutput} from "@/apis/pistonApi";
 import Editor from "@monaco-editor/react";
 import {parseAsBoolean, useQueryState} from "nuqs";
 import {useEffect, useRef} from "react";
+import {OutputType} from "./Content";
 import {languages} from "./LanguageSelector";
-export default function EditorPanel({setOutput}: {setOutput?: (output: string) => void}) {
+export default function EditorPanel({setOutput}: {setOutput?: (output: OutputType) => void}) {
 	const [value] = useQueryState("language");
 	const [isRun, setIsRun] = useQueryState("run", parseAsBoolean.withDefault(false));
-
+	const {getOutput, isPending} = useGetOutput();
 	const editorRef = useRef<{getValue: () => string} | null>(null);
 
 	function handleEditorDidMount(editor: any, monaco: any) {
@@ -24,7 +25,8 @@ export default function EditorPanel({setOutput}: {setOutput?: (output: string) =
 			}
 			const srcCode = editorRef.current.getValue();
 			const output = await pistonApi({srcCode, language: value || "js"});
-			setOutput?.(output.run.output);
+			setOutput?.(output.run);
+			console.log("output", output);
 			setIsRun(false);
 		} catch (error) {
 			// console.error(error);

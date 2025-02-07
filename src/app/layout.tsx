@@ -1,3 +1,5 @@
+
+import {QueryClient, QueryClientProvider} from "@tanstack/react-query";
 import type {Metadata} from "next";
 import {Geist, Geist_Mono} from "next/font/google";
 import {NuqsAdapter} from "nuqs/adapters/next";
@@ -26,10 +28,13 @@ export default function RootLayout({
 }: Readonly<{
 	children: React.ReactNode;
 }>) {
+	
 	return (
 		<html lang="en" suppressHydrationWarning>
 			<body className={`${geistSans.variable} ${geistMono.variable} antialiased`}>
-				<NuqsAdapter>{children}</NuqsAdapter>
+				<NuqsAdapter>
+					{children}
+				</NuqsAdapter>
 			</body>
 		</html>
 	);

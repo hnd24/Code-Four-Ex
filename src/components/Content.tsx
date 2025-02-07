@@ -1,23 +1,38 @@
 "use client";
 
 import {ResizableHandle, ResizablePanel, ResizablePanelGroup} from "@/components/ui/resizable";
+import {useIsMobile} from "@/hooks/use-mobile";
 import {useState} from "react";
 import EditorPanel from "./EditorPanel";
+import Output from "./Output";
+
+export type OutputType = {
+	code: number;
+	stdout: string;
+	stderr: string;
+	output: string;
+	signal: any;
+};
 
 export default function Panel() {
-	const [output, setOutput] = useState("");
+	const [output, setOutput] = useState<OutputType>({
+		code: 0,
+		stdout: "",
+		stderr: "",
+		output: "",
+		signal: null,
+	});
+	const isMobile = useIsMobile();
 	return (
 		<ResizablePanelGroup
-			direction="horizontal"
+			direction={isMobile ? "vertical" : "horizontal"}
 			className="min-h-[200px] w-screen rounded-lg border ">
-			<ResizablePanel defaultSize={50}>
+			<ResizablePanel defaultSize={75}>
 				<EditorPanel setOutput={setOutput} />
 			</ResizablePanel>
 			<ResizableHandle withHandle />
-			<ResizablePanel defaultSize={50}>
-				<div className="flex h-full items-center justify-center p-6">
-					<span className="font-semibold">OutputPanel</span>
-				</div>
+			<ResizablePanel defaultSize={25}>
+				<Output output={output} />
 			</ResizablePanel>
 		</ResizablePanelGroup>
 	);

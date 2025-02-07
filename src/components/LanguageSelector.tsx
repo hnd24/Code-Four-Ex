@@ -27,7 +27,7 @@ export const languages = [
 ];
 export default function LanguageSelector() {
 	const [open, setOpen] = useState(false);
-	const [value, setValue] = useQueryState("language");
+	const [value, setValue] = useQueryState("language", {defaultValue: "js"});
 
 	return (
 		<Popover open={open} onOpenChange={setOpen}>
@@ -36,14 +36,14 @@ export default function LanguageSelector() {
 					variant="outline"
 					role="combobox"
 					aria-expanded={open}
-					className="w-fit min-w-[160px] justify-between">
+					className="w-fit min-w-[80px] justify-between">
 					{value
 						? languages.find(framework => framework.value === value)?.label
 						: "Select language"}
 					<ChevronsUpDown />
 				</Button>
 			</PopoverTrigger>
-			<PopoverContent className="w-fit min-w-[160px] p-0">
+			<PopoverContent className="w-fit min-w-[80px] p-0">
 				<Command>
 					<CommandList>
 						<CommandEmpty>No framework found.</CommandEmpty>

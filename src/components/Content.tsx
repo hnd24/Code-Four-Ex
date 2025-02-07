@@ -22,6 +22,7 @@ export default function Panel() {
 		output: "",
 		signal: null,
 	});
+
 	const isMobile = useIsMobile();
 	return (
 		<ResizablePanelGroup
@@ -32,7 +33,7 @@ export default function Panel() {
 			</ResizablePanel>
 			<ResizableHandle withHandle />
 			<ResizablePanel defaultSize={25}>
-				<Output output={output} />
+				<Output output={output}  />
 			</ResizablePanel>
 		</ResizablePanelGroup>
 	);

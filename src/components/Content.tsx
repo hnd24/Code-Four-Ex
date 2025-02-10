@@ -14,7 +14,7 @@ export type OutputType = {
 	signal: any;
 };
 
-export default function Panel() {
+export default function Content() {
 	const [output, setOutput] = useState<OutputType>({
 		code: 0,
 		stdout: "",

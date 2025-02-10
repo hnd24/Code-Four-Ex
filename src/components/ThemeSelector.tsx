@@ -11,23 +11,38 @@ import {
 	CommandList,
 } from "@/components/ui/command";
 import {Popover, PopoverContent, PopoverTrigger} from "@/components/ui/popover";
-import Image from "next/image";
 import {useQueryState} from "nuqs";
 import {useState} from "react";
 
-export const languages = [
+export const themes = [
 	{
-		value: "js",
-		label: "javascript",
+		value: "vs-dark",
+		label: "vs dark",
 	},
 	{
-		value: "ts",
-		label: "typescript",
+		value: "vs",
+		label: "vs light",
+	},
+	{
+		value: "Dracula",
+		label: "dracula",
+	},
+	{
+		value: "GithubDark",
+		label: "github dark",
+	},
+	{
+		value: "GithubLight",
+		label: "github light",
+	},
+	{
+		value: "CloudsMidnight",
+		label: "clouds midnight",
 	},
 ];
-export default function LanguageSelector() {
+export default function ThemeSelector() {
 	const [open, setOpen] = useState(false);
-	const [value, setValue] = useQueryState("language", {defaultValue: "js"});
+	const [value, setValue] = useQueryState("theme", {defaultValue: "vs-dark"});
 
 	return (
 		<Popover open={open} onOpenChange={setOpen}>
@@ -37,32 +52,24 @@ export default function LanguageSelector() {
 					role="combobox"
 					aria-expanded={open}
 					className="w-fit min-w-[80px] justify-between">
-					{value ? languages.find(language => language.value === value)?.label : "Select language"}
+					{value ? themes.find(theme => theme.value === value)?.label : "Select theme"}
 					<ChevronsUpDown />
 				</Button>
 			</PopoverTrigger>
 			<PopoverContent className="w-fit min-w-[80px] p-0">
 				<Command>
 					<CommandList>
-						<CommandEmpty>No language found.</CommandEmpty>
+						<CommandEmpty>No theme found.</CommandEmpty>
 						<CommandGroup>
-							{languages.map(language => (
+							{themes.map(theme => (
 								<CommandItem
-									key={language.value}
-									value={language.value}
+									key={theme.value}
+									value={theme.value}
 									onSelect={currentValue => {
 										setValue(currentValue === value ? "" : currentValue);
 										setOpen(false);
 									}}>
-									{language.label}
-
-									<Image
-										className="ml-auto"
-										src={`/${language.label}.png`}
-										alt={`/${language.label}`}
-										width={20}
-										height={20}
-									/>
+									{theme.label}
 								</CommandItem>
 							))}
 						</CommandGroup>
